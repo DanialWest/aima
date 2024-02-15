@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Selection</title>
+    <style>
+        body {
+            text-align: center;
+            margin-top: 30px;
+            font-family: 'Courier';
+            background-color:#FFF5E4;
+            color: #FF9494;
+        }
+        #foodquestion {
+            font-size: 50px;
+            margin-bottom: 30px;
+        }
+        .food-item {
+            display: inline-block;
+            margin: 10px;
+            vertical-align: top;
+			color: #FF9494;
+        }
+        .food-item img {
+            width: 220px; 
+            height: auto;
+			padding: 10px;
+        }
+        .food-item label {
+            display: block;
+        }
+        .button {
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            margin: 10px;
+            font-family: 'courier';
+            margin-bottom: 20px;
+            background-color:#FFE3E1;
+            color: #e67373;
+            border-radius: 12px;
+            border: 2px solid #FFE3E1;
+        }
+    </style>
+</head>
+<body>
+    <div id="foodquestion"><b><u>Что покушаем?</u></b></div>
+<h2>Выбирайте все что угодно</h2>
+<form>
+    <div class="food-selection">     
+        <div class="food-item">
+            <img src="food/burgers.jpeg" alt="Burgers, fries and fried chicken">
+            <label><input type="checkbox" name="food" value="Burgers">бургеры</label>
+        </div>
+        <div class="food-item">
+            <img src="food/mcdonalds.jpg" alt="koreanfood">
+            <label><input type="checkbox" name="food" value="mac">мак</label>
+        </div>
+        <div class="food-item">
+            <img src="food/pasta.jpeg" alt="pasta">
+            <label><input type="checkbox" name="food" value="pasta"> паста</label>
+        </div>
+        <br>
+        <div class="food-item">
+            <img src="food/pizza.jpeg" alt="pizza">
+            <label><input type="checkbox" name="food" value="pizza"> пицца</label>
+        </div>
+        <div class="food-item">
+            <img src="food/steak.jpeg" alt="steak">
+            <label><input type="checkbox" name="food" value="steak"> стейк</label>
+        </div>
+        <div class="food-item">
+            <img src="food/sushi.jpeg" alt="sushi">
+            <label><input type="checkbox" name="food" value="sushi"> суши</label>
+        </div>
+    </div>
+    <button class ="button" type="submit" onclick="location.href='/desserts'" >Продолжить</button>
+</form>
+<script>
+    const form = document.querySelector('form');
+    form.addEventListener('submit' , (e) => {
+        e.preventDefault();
+
+        let foods = [];
+        document.querySelectorAll('[type="checkbox"]').forEach(item => {
+            if (item.checked === true) {
+                foods.push(item.value);
+            }
+        })
+        console.log(foods);
+        fetch("/foods", {
+    method: "POST", 
+    headers: {
+       'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(foods)
+}).then(response => {
+    // this line of code depends upon what type of response you're expecting
+    return response.text();     
+}).then(result => {
+    console.log(result);
+}).catch(err => {
+    console.log(err);
+});
+    })
+
+
+</script>
+<!--<form name="myForm" id="reg-form" method="post" action="/foods">
+    <div class="row">
+        <div class="col-sm-12">
+          <label class="col-sm-2 col-form-label" type="text" style="color: rgb(0, 0, 0); "><input type="text" name="food" value="doner">doner</label>
+        </div>
+      </div>
+      <button class="button"  type="submit" onclick="location.href='dessert.html'">Sign Up</button>
+</form>-->
+</body>
+</html>
