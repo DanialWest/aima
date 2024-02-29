@@ -19,7 +19,7 @@ const coll = db.collection("hangout");
 app.post("/date", async (req, res) => {
     console.log(req.body.nigga);          // this would be the data sent with the request
     await coll.insertOne({name: req.body.nigga});
-    res.redirect('/foods');
+    res.redirect('/lastpage');
 })
     app.post("/foods", async (req, res) => {
         console.log(req.body);          // this would be the data sent with the request
